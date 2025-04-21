@@ -42,7 +42,7 @@ class TaskSerializers(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = ['url', 'id', 'name', 'description', 'status', 'created_on', 'completed_on', 'created_by', 'completed_by', 'task_list', 'attachments']
-        read_only_fields = ["created_on", "created_by", "completed_on", "completed_by"]
+        read_only_fields = ["created_on", "created_by", "completed_on", "completed_by", "status"]
 
 class AttachmentSerializers(serializers.ModelSerializer):
     task = serializers.HyperlinkedRelatedField(queryset=Task.objects.all(), many=False, view_name="task-detail")
