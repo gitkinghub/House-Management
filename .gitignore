@@ -9,3 +9,11 @@ logs/
 
 # Ignore the .env file
 .env
+
+# Database
+*.sqlite3
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
