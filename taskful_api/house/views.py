@@ -15,7 +15,8 @@ class HouseViewSet(viewsets.ModelViewSet):
     permission_classes = [IsHouseManagerOrNone, ]
     queryset = House.objects.all()
     serializer_class = HouseSerializer
-    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter, DjangoFilterBackend]
+    ordering_fields = ["not_completed_tasks_count", "points", "completed_tasks_count"]
     search_fields = ['name', 'description']
     filterset_fields = ['members']
 
@@ -54,7 +55,7 @@ class HouseViewSet(viewsets.ModelViewSet):
 
         except Exception as e:
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
+
     @action(detail=True, methods=["post"], permission_classes=[], name="Remove Member")
     def remove_member(self, request, pk=None):
         try:
@@ -63,7 +64,7 @@ class HouseViewSet(viewsets.ModelViewSet):
 
             if user_id == None:
                 return Response({'user_id': "User ID is Not Provided"}, status=status.HTTP_400_BAD_REQUEST)
-    
+
             user_profile = User.objects.get(pk=user_id).profile
             house_members = house.members
             if user_profile in house_members.all():
