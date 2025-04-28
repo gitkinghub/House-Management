@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.utils import timezone
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework import viewsets, mixins, response
 from rest_framework import status as s
@@ -22,6 +23,8 @@ class TaskViewset(viewsets.ModelViewSet):
     permission_classes = [
         IsAllowedToEditTaskElseNone,
     ]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["status"]
 
     def get_queryset(self):
         queryset = super(TaskViewset, self).get_queryset()
