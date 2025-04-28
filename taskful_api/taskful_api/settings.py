@@ -44,9 +44,11 @@ INSTALLED_APPS = [
     "social_django",
     "rest_framework_social_oauth2",
     "django_filters",
+    "background_task",
     "users",
     "house",
     "task",
+    "background_jobs",
 ]
 
 MIDDLEWARE = [
