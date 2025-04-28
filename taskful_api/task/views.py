@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
-from rest_framework import viewsets, mixins, response
+from rest_framework import viewsets, mixins, response, status, filters
 from rest_framework import status as s
 
 from .permission import IsAllowedToEditAttachmentElseNone, IsAllowedToEditTaskElseNone, IsAllowedToEditTaskListElseNone
@@ -23,7 +23,8 @@ class TaskViewset(viewsets.ModelViewSet):
     permission_classes = [
         IsAllowedToEditTaskElseNone,
     ]
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+    search_fields = ["name", "description"]
     filterset_fields = ["status"]
 
     def get_queryset(self):
